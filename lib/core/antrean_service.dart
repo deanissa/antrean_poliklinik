@@ -22,7 +22,9 @@ class AntreanService {
   ) async {
     final prefix = getPrefix(layananId);
 
-    final counterRef = db.child("counter_antrean/$layananId");
+    final counterRef = db.child(
+      "counter_antrean/$layananId",
+    ); // untuk mengetahui counter antrian
 
     // menambahkan transaction agar antrean terlindungi dari simultaneous request untuk menghindari nomor dobel, locat atauapun ketika pasien bersama2 mengambil nomor antrean
     // Gunakan transaction agar aman dari simultaneous request
@@ -54,4 +56,42 @@ class AntreanService {
 
     return nomorAntrean;
   }
+
+  // fungsi pemanggilan antrean
+  Future<Map<String, dynamic>?> panggilAntreanBerikutnya(
+    String layananId,
+    String loketId,
+  ) async {
+    final antreanRef = db.child("antrean/$layananId");
+
+    // Ambil antrean dengan status menunggu
+    final snapshot = await antreanRef
+        .orderByChild("status")
+        .equalTo("menunggu")
+        .limitToFirst(1)
+        .get();
+
+    if (!snapshot.exists) {
+      print("Tidak ada antrean menunggu.");
+      return null;
+    }
+
+    // Ambil key nomor antreannya
+    final nomorAntrean = snapshot.children.first.key!;
+    final data = Map<String, dynamic>.from(
+      snapshot.children.first.value as Map,
+    );
+
+    // Update status jadi dilayani
+    await antreanRef.child(nomorAntrean).update({
+      "loket_id": loketId,
+      "status": "dilayani",
+      "waktu_panggil": DateTime.now().toIso8601String(),
+    });
+
+    return {"nomor": nomorAntrean, "data": data};
+  }
+
+  // selesai
+  // batalkan
 }
