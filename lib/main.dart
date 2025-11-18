@@ -32,7 +32,7 @@ Future<void> main() async {
 
   // TESTING UNTUK MENGUJI KODE KEDALAM FIREBASE STATUS DIBATALKAN
   print("=== STEP 1: AMBIL NOMOR ===");
-  final nomor = await kios.ambilNomor("POLI_UMUM", "A005");
+  final nomor = await kios.ambilNomor("POLI_UMUM", "A026");
   print("Nomor yang diambil pasien = $nomor");
 
   print("=== STEP 2: PANGGIL NOMOR ===");
