@@ -20,13 +20,13 @@ class CallerBottomNav extends StatelessWidget {
       height: 70,
       decoration: BoxDecoration(
         color: Colors.white, // HANYA kapsulnya yang putih
-        borderRadius: BorderRadius.circular(40),
-        border: Border.all(color: const Color(0xFF256EFF), width: 2),
+        borderRadius: BorderRadius.circular(50),
+        // border: Border.all(color: const Color(0xFF256EFF), width: 2),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.10),
-            blurRadius: 8,
-            offset: const Offset(0, 3),
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -35,7 +35,7 @@ class CallerBottomNav extends StatelessWidget {
         children: [
           // Animasi Highlight
           AnimatedAlign(
-            duration: const Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 280),
             curve: Curves.easeOutQuad,
             alignment: currentIndex == 0
                 ? Alignment.centerLeft
@@ -64,13 +64,21 @@ class CallerBottomNav extends StatelessWidget {
   }
 
   Widget _navIcon(IconData icon, int index) {
+    final bool active = currentIndex == index;
     return GestureDetector(
       onTap: () => onTap(index),
-      child: Center(
-        child: Icon(
-          icon,
-          size: 26,
-          color: currentIndex == index ? Colors.white : const Color(0xFF256EFF),
+      child: SizedBox(
+        width: 70,
+        height: 70,
+        child: Center(
+          child: Transform.translate(
+            offset: const Offset(0, -1.5), // ⭐ icon turun dikit agar center
+            child: Icon(
+              icon,
+              size: 26,
+              color: active ? Colors.white : const Color(0xFF256EFF),
+            ),
+          ),
         ),
       ),
     );
