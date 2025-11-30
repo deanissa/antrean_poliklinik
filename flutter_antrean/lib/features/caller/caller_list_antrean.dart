@@ -140,8 +140,7 @@ class _CallerListAntreanState extends State<CallerListAntrean> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 16),
-
+        const SizedBox(height: 18),
         const Text(
           "Antrean Pasien",
           style: TextStyle(
@@ -161,7 +160,7 @@ class _CallerListAntreanState extends State<CallerListAntrean> {
           },
         ),
 
-        const SizedBox(height: 20),
+        const SizedBox(height: 0),
 
         /// LIST ANTREAN
         Expanded(
